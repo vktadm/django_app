@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center p-5">
+        <div class="col-md-6 col-xl-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title pt-5">Авторизация</h3>
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        Не верный логин или пароль. Попробуйте еще раз.
+                    </div>
+                    {% endif %}
+                    <form method="post" action="{% url 'users:login' %}" class="form">
+                        {% csrf_token %}
+                        <div class="pt-3 text-start">
+                            {% bootstrap_form form %}
+                        </div>
+                        <div class="pt-3">
+                           <button name="submit" class="btn btn-warning">Войти</button>
+                        </div>
+                        <input type="hidden" name="next" value="{% url 'main_app:index' %}" />
+                    </form>
+                    <div class="pt-3 pb-5">
+                        <p>Нет аккаунта? <a href="{% url 'users:register' %}" class="text-warning">Зарегистрироваться</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

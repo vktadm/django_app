@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="vh-100 overflow-scroll col-auto col-md-4 col-xl-3 border">
+            <div class="d-flex flex-column align-items-center align-items-sm-start">
+                <div class="row pt-4">
+                    <a href="{% url 'main_app:topics' %}" class="navbar-brand">Мои заметки</a>
+                </div>
+                <div class="row">
+                    <ul class="nav nav-pills flex-column">
+                        {% for topic in topics %}
+                        {% if topic == current_topic %}
+                        <li class="nav-link d-block bg-warning text-white">
+                            <a class="nav-link text-dark" href="{% url 'main_app:topic' topic.id %}" ><i class="fa-solid fa-folder-open"></i> {{ topic }}</a>
+                        </li>
+                        <ul class="nav nav-pills flex-column">
+                            {% for entry in entries %}
+                            <li class="nav-link text-dark ms-5">
+                                <a class="nav-link text-dark" href="{% url 'main_app:edit_entry' entry.id %}">{{ entry }}
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    <small>{{ entry.date_add|date:'d.m.y H:i' }}</small>
+                                </a>
+                            </li>
+                            {% empty %}
+                            <li class="nav-link text-dark ms-5">
+                                <p >Тут пока еще нет заметок :(</p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <li class="nav-link">
+                            <a class="nav-link text-dark" href="{% url 'main_app:topic' topic.id %}" ><i class="fa-solid fa-folder-open"></i> {{ topic }}</a>
+                        </li>
+                        {% endif %}
+                        {% empty %}
+                        <li class="nav-link" >Здесь пока еще нет папок:)</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="pt-4">
+                    <a class="btn btn-outline-dark" href="{% url 'main_app:new_topic' %}">
+                        <i class="fa-solid fa-plus"></i> Новая папка
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="vh-100 overflow-scroll col">
+            <div class="pt-4">
+                <p class="nav-link text-dark">
+                    <a class="btn btn-outline-dark" href="{% url 'main_app:new_entry' current_topic.id %}">
+                        <i class="fa-solid fa-pen"></i></i> Новая заметка</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

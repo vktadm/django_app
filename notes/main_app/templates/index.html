@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center p-5">
+        <div class="col-md-6 col-xl-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h1 class="card-title pt-5">Привет, ты действительно заглянул сюда?!</h1>
+                    <p class="h5 pt-3">Представляю тебе мой первый* учебный проект</p>
+                    <div class="fa-5x">
+                        <i class="fa-solid fa-poo"></i>
+                    </div>
+                    <p class="card-text pt-3">* Был перерыв в разработке 3 года, поэтому не совсем первый проект</p>
+                    <div class="pt-3 pb-5">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'main_app:topics' %}" class="btn btn-warning btn-lg">К твоим заметкам!</a>
+                        {% else %}
+                            <a href="{% url 'users:login' %}" class="btn btn-warning btn-lg">Скорее авторизираться!</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

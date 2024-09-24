@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="vh-100 overflow-scroll col-auto col-md-4 col-xl-3 border">
+            <div class="d-flex flex-column align-items-center align-items-sm-start">
+                <div class="pt-4">
+                    <a href="{% url 'main_app:topics' %}" class="navbar-brand">Мои заметки</a>
+                </div>
+                <div class="">
+                    <ul class="nav flex-column">
+                        {% for topic in topics %}
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'main_app:topic' topic.id %}" ><i class="fa-solid fa-folder-open"></i> {{ topic }}</a>
+                        </li>
+                        {% empty %}
+                        <li class="nav-item text-dark" >Здесь пока еще нет папок:)</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="pt-4">
+                    <a class="btn btn-outline-dark" href="{% url 'main_app:new_topic' %}">
+                    <i class="fa-solid fa-plus"></i> Новая папка</a>
+                </div>
+                <div class="pt-4">
+                    <form action="{% url 'main_app:new_topic' %}" method="post" class="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <button name="submit" class="btn btn-warning">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="vh-100 overflow-scroll col">
+            <div class="pt-4">
+                <h5>Пока не выбрано ни одной папки</h5>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center p-5">
+        <div class="col-md-6 col-xl-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title pt-5">Регистрация</h3>
+                    <form method="post" action="{% url 'users:register' %}" class="form">
+                        {% csrf_token %}
+                        <div class="pt-3 text-start">
+                            {% bootstrap_form form %}
+                        </div>
+                        <div class="pt-3">
+                           <button name="submit" class="btn btn-warning">Войти</button>
+                        </div>
+                        <input type="hidden" name="next" value="{% url 'main_app:index' %}" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
